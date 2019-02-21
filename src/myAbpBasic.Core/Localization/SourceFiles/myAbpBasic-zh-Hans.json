@@ -9,6 +9,14 @@
     "About_Description": "这特么就是一个简单的基于ASP.Net Core的初始模板！没别的卵东西！！",
     "TaskList": "任务列表",
     "TaskState_Open": "进行中",
-    "TaskState_Completed": "已完成"
+    "TaskState_Completed": "已完成",
+    "AllTasks": "全部",
+    "Unassigned": "未指派",
+    "AddNew": "添加",
+    "NewTask": "添加任务",
+    "Title": "标题",
+    "Description": "描述",
+    "AssignedPerson": "指派人员",
+    "Save": "保存"
   }
 }
