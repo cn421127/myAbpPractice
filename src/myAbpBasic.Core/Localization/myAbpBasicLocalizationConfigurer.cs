@@ -13,6 +13,7 @@ namespace myAbpBasic.Localization
         {
             localizationConfiguration.Languages.Add(new LanguageInfo("en", "English", "famfamfam-flags england", isDefault: true));
             localizationConfiguration.Languages.Add(new LanguageInfo("tr", "Türkçe", "famfamfam-flags tr"));
+            localizationConfiguration.Languages.Add(new LanguageInfo("zh-Hans", "简体中文", "famfamfam-flags cn"));
 
             localizationConfiguration.Sources.Add(
                 new DictionaryBasedLocalizationSource(myAbpBasicConsts.LocalizationSourceName,

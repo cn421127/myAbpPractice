@@ -2,7 +2,7 @@
 
 namespace myAbpBasic.Migrations
 {
-    public partial class Upgraded_To_ABP_v3_9_0 : Migration
+    public partial class init_all : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

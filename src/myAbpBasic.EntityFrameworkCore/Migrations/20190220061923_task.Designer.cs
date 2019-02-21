@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using myAbpBasic.EntityFrameworkCore;
 
 namespace myAbpBasic.Migrations
 {
     [DbContext(typeof(myAbpBasicDbContext))]
-    partial class myAbpBasicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190220061923_task")]
+    partial class task
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

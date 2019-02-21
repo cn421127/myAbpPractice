@@ -10,7 +10,7 @@ namespace myAbpBasic.EntityFrameworkCore
             )
         {
             /* This is the single point to configure DbContextOptions for myAbpBasicDbContext */
-            dbContextOptions.UseSqlServer(connectionString);
+            dbContextOptions.UseMySql(connectionString);
         }
     }
 }
