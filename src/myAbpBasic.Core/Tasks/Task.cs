@@ -41,7 +41,7 @@ namespace myAbpBasic.Tasks
         {
             Title = title;
             Description = description;
-            AssignedPersonId = assignedPersonId;
+        AssignedPersonId = assignedPersonId;
         }
     }
 

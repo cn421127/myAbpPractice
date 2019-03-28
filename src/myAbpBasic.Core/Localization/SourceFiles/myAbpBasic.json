@@ -16,6 +16,7 @@
     "Title": "Title",
     "Description": "Description",
     "AssignedPerson": "Assigned Person",
-    "Save": "Save"
+    "Save": "Save",
+    "PersonList": "PersonList"
   }
 }

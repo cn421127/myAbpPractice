@@ -16,8 +16,10 @@ namespace myAbpBasic.Tests.TestDatas
         public void Build()
         {
             //create test data here...
-            var neo = new Person("Neo");
+            var neo = new People.Person("Neo");
+            var pp = new People.Person("PP");
             _context.People.Add(neo);
+            _context.People.Add(pp);
             _context.SaveChanges();
 
             _context.Tasks.AddRange(

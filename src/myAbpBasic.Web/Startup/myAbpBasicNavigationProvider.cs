@@ -32,6 +32,13 @@ namespace myAbpBasic.Web.Startup
                         url: "Tasks",
                         icon: "fa fa-tasks"
                     )
+                ).AddItem(
+                    new MenuItemDefinition(
+                        "PersonList",
+                        L("PersonList"),
+                        url: "Person",
+                        icon: "fa fa-tasks"
+                    )
                 );
         }
 

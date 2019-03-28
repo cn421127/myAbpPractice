@@ -1,5 +1,6 @@
 ﻿using Abp.AspNetCore;
 using Abp.AspNetCore.Configuration;
+using Abp.Configuration.Startup;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using myAbpBasic.Configuration;
