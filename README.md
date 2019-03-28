@@ -3,11 +3,13 @@
 This template is a simple startup project to start with ABP
 using ASP.NET Core and EntityFramework Core.
 
+I follow the step-by-step tutorial on the official website and finnaly come to these codes.
+
 ## Prerequirements
 
 * Visual Studio 2017
 * .NET Core SDK
-* SQL Server
+* SQL Server or MySQL
 
 ## How To Run
 
