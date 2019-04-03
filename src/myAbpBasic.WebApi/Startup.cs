@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using myAbpBasic.Service.Core.Consul;
+using myAbpBasic.MicroService.Core.Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -47,7 +47,7 @@ namespace myAbpBasic.WebApi
 
 
             // register this service to consul
-            app.RegisterConsul(lifetime, new ServiceEntity(Configuration));
+            //app.RegisterConsul(lifetime, new ServiceEntity(Configuration));
         }
     }
 }

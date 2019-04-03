@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\myAbpBasic.Service.Core\myAbpBasic.Service.Core.csproj" />
+    <ProjectReference Include="..\myAbpBasic.Service.Core\myAbpBasic.MicroService.Core.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="http://json.schemastore.org/bootstraprc" /></VisualStudio></ProjectExtensions>

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using System;
 
-namespace myAbpBasic.Service.Core.Consul
+namespace myAbpBasic.MicroService.Core.Consul
 {
     public static class AppBuilderExtensions
     {

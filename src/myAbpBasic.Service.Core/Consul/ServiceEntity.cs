@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
 
-namespace myAbpBasic.Service.Core.Consul
+namespace myAbpBasic.MicroService.Core.Consul
 {
     public class ServiceEntity
     {
