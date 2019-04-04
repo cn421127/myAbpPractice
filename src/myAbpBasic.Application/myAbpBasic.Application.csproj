@@ -16,5 +16,6 @@
   <ItemGroup>
     <PackageReference Include="Abp.EntityFrameworkCore" Version="4.2.0" />
     <PackageReference Include="Abp.AutoMapper" Version="4.2.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
   </ItemGroup>
 </Project>

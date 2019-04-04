@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using myAbpBasic.MicroService.Core.Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,8 +10,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Ocelot.DependencyInjection;
+using Ocelot.Provider.Consul;
+using Ocelot.Provider.Polly;
 
-namespace myAbpBasic.WebApi
+namespace SQ.Proton.Gateway.Sample
 {
     public class Startup
     {
@@ -26,11 +28,25 @@ namespace myAbpBasic.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+
+            services.AddOcelot(Configuration).AddConsul().AddPolly();
+
+            // Swagger
+            //services.AddMvc();
+            //services.AddSwaggerGen(options =>
+            //{
+            //    options.SwaggerDoc($"{Configuration["Swagger:DocName"]}", new Info
+            //    {
+            //        Title = Configuration["Swagger:Title"],
+            //        Version = Configuration["Swagger:Version"]
+            //    });
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -44,10 +60,6 @@ namespace myAbpBasic.WebApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
-
-
-            // register this service to consul
-            //app.RegisterConsul(lifetime, new ServiceEntity(Configuration));
         }
     }
 }

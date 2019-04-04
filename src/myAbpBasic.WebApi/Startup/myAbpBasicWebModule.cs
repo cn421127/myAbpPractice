@@ -26,17 +26,12 @@ namespace myAbpBasic.Web.Startup
         public override void PreInitialize()
         {
             Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(myAbpBasicConsts.ConnectionStringName);
-
-            Configuration.Navigation.Providers.Add<myAbpBasicNavigationProvider>();
-
+            
             Configuration.Modules.AbpAspNetCore()
                 .CreateControllersForAppServices(
                     typeof(myAbpBasicApplicationModule).GetAssembly(),"app"
                 );
-
-            //Configuration.Modules.AbpWebApi().DynamicApiControllerBuilder
-            //    .ForAll<IApplicationService>(Assembly.GetAssembly(typeof(myAbpBasicApplicationModule)), "app1")
-            //    .Build();
+            
         }
 
         public override void Initialize()
