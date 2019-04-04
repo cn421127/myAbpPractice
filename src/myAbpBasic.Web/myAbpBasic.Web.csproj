@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\myAbpBasic.Application\myAbpBasic.Application.csproj" />
     <ProjectReference Include="..\myAbpBasic.EntityFrameworkCore\myAbpBasic.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\myAbpBasic.Service.Core\SQ.Proton.MicroService.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.0" />
@@ -42,7 +43,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
