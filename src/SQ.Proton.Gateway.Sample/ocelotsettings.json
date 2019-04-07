@@ -68,7 +68,8 @@
     //"BaseUrl": "https://api.mybusiness.com"
     "ServiceDiscoveryProvider": {
       "Host": "192.168.85.129", // Consul Service IP
-      "Port": 8500 // Consul Service Port
+      "Port": 8500, // Consul Service Port
+      "ConfigurationKey": "Oceolot_A"
     },
     "RateLimitOptions": {
       "DisableRateLimitHeaders": false, // Http头  X-Rate-Limit 和 Retry-After 是否禁用

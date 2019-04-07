@@ -11,6 +11,10 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>E:\Solutions\Github\myAbpBasic\src\myAbpBasic.Web\Service.Test.xml</DocumentationFile>
+    <OutputPath>bin\Debug\netcoreapp2.2\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Update="log4net.config">
@@ -24,11 +28,13 @@
   <ItemGroup>
     <ProjectReference Include="..\myAbpBasic.Application\myAbpBasic.Application.csproj" />
     <ProjectReference Include="..\myAbpBasic.EntityFrameworkCore\myAbpBasic.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\myAbpBasic.Service.Core\SQ.Proton.MicroService.Core.csproj" />
+    <ProjectReference Include="..\myAbpBasic.Service.Core\SQ.Proton.ServiceCenter.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
     <PackageReference Include="System.Net.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
     <PackageReference Include="Castle.LoggingFacility.MsLogging" Version="3.1.0" />

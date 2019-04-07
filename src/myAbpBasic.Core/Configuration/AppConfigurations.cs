@@ -16,7 +16,8 @@ namespace myAbpBasic.Configuration
 
         public static IConfigurationRoot Get(string path, string environmentName = null, bool addUserSecrets = false)
         {
-            var cacheKey = path + "#" + environmentName + "#" + addUserSecrets;
+            var cacheKey = path + "#" + environmentName;
+            //var cacheKey = path + "#" + environmentName + "#" + addUserSecrets;
             return ConfigurationCache.GetOrAdd(
                 cacheKey,
                 _ => BuildConfiguration(path, environmentName, addUserSecrets)
@@ -36,10 +37,10 @@ namespace myAbpBasic.Configuration
 
             builder = builder.AddEnvironmentVariables();
 
-            if (addUserSecrets)
-            {
-                builder.AddUserSecrets(typeof(AppConfigurations).GetAssembly());
-            }
+            //if (addUserSecrets)
+            //{
+            //    builder.AddUserSecrets(typeof(AppConfigurations).GetAssembly());
+            //}
 
             return builder.Build();
         }

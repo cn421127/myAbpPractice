@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myAbpBasic.Tests", "test\my
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myAbpBasic.Web.Tests", "test\myAbpBasic.Web.Tests\myAbpBasic.Web.Tests.csproj", "{5D441612-29CA-4DAD-9945-B9DE11CE026C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQ.Proton.MicroService.Core", "src\myAbpBasic.Service.Core\SQ.Proton.MicroService.Core.csproj", "{D37015BB-A266-4799-A13E-52792F789ED9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQ.Proton.ServiceCenter", "src\myAbpBasic.Service.Core\SQ.Proton.ServiceCenter.csproj", "{D37015BB-A266-4799-A13E-52792F789ED9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{08FB09B4-F44D-46EB-8D61-10BA92CC9CF8}"
 EndProject
