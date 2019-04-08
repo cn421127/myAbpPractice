@@ -3,12 +3,12 @@
     // API:Service.Order
     // --> swagger part
     {
-      "DownstreamPathTemplate": "/doc/orderservice/swagger.json",
+      "DownstreamPathTemplate": "/doc/serviceorder/swagger.json",
       "DownstreamScheme": "http",
       "ServiceName": "Service.Order",
       "LoadBalancer": "RoundRobin",
       "UseServiceDiscovery": true,
-      "UpstreamPathTemplate": "/doc/orderservice/swagger.json",
+      "UpstreamPathTemplate": "/doc/serviceorder/swagger.json",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
     },
     {
@@ -19,7 +19,7 @@
       "LoadBalancerOptions": {
         "Type": "RoundRobin"
       },
-      "UpstreamPathTemplate": "/api/OrderService/{url}",
+      "UpstreamPathTemplate": "/api/ServiceOrder/{url}",
       "UpstreamHttpMethod": [ "Get", "Post" ],
       "ReRoutesCaseSensitive": false, // non case sensitive
       "FileCacheOptions": { //缓存
@@ -34,26 +34,26 @@
         "Limit": 5 // 在统计时间段内允许的最大请求数量
       }
     },
-    // API:Service.Product
+    // API:Service.Partner
     // --> swagger part
     {
-      "DownstreamPathTemplate": "/doc/productservice/swagger.json",
+      "DownstreamPathTemplate": "/doc/servicepartner/swagger.json",
       "DownstreamScheme": "http",
-      "ServiceName": "Service.Product",
+      "ServiceName": "Service.Partner",
       "LoadBalancer": "RoundRobin",
       "UseServiceDiscovery": true,
-      "UpstreamPathTemplate": "/doc/productservice/swagger.json",
+      "UpstreamPathTemplate": "/doc/servicepartner/swagger.json",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
     },
     {
       "UseServiceDiscovery": true, // use Consul service discovery
       "DownstreamPathTemplate": "/api/{url}",
       "DownstreamScheme": "http",
-      "ServiceName": "Service.Product",
+      "ServiceName": "Service.Partner",
       "LoadBalancerOptions": {
         "Type": "RoundRobin"
       },
-      "UpstreamPathTemplate": "/api/ProductService/{url}",
+      "UpstreamPathTemplate": "/api/ServicePartner/{url}",
       "UpstreamHttpMethod": [ "Get", "Post" ],
       "ReRoutesCaseSensitive": false, // non case sensitive
       "QoSOptions": {
@@ -67,9 +67,8 @@
   "GlobalConfiguration": {
     //"BaseUrl": "https://api.mybusiness.com"
     "ServiceDiscoveryProvider": {
-      "Host": "192.168.85.129", // Consul Service IP
-      "Port": 8500, // Consul Service Port
-      "ConfigurationKey": "Oceolot_A"
+      "Host": "192.168.8.183", // Consul Service IP
+      "Port": 8500 // Consul Service Port
     },
     "RateLimitOptions": {
       "DisableRateLimitHeaders": false, // Http头  X-Rate-Limit 和 Retry-After 是否禁用

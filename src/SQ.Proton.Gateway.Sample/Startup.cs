@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 using Ocelot.Provider.Consul;
 using Ocelot.Provider.Polly;
 
@@ -60,6 +61,10 @@ namespace SQ.Proton.Gateway.Sample
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+
+            // Ocelot
+            app.UseOcelot().Wait();
         }
     }
 }

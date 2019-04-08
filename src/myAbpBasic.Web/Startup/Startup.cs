@@ -1,38 +1,36 @@
-﻿using System;
-using System.IO;
-using Abp.AspNetCore;
+﻿using Abp.AspNetCore;
 using Abp.Castle.Logging.Log4Net;
 using Abp.EntityFrameworkCore;
-using myAbpBasic.EntityFrameworkCore;
 using Castle.Facilities.Logging;
-using myAbpBasic.Configuration;
-using myAbpBasic.MicroService.Core.Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
+using myAbpBasic.Configuration;
+using myAbpBasic.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using myAbpBasic.MicroService.Core.Consul;
 
 namespace myAbpBasic.Web.Startup
 {
     public class Startup
     {
-        private readonly IConfigurationRoot _appConfiguration;
+        //public readonly IConfigurationRoot _appConfiguration;
 
-        public Startup(IHostingEnvironment env)
-        {
-            _appConfiguration = env.GetAppConfiguration();
-        }
-
-        //public Startup(IConfiguration _appConfiguration)
+        //public Startup(IHostingEnvironment env)
         //{
-        //    _appConfiguration = _appConfiguration;
+        //    _appConfiguration = env.GetAppConfiguration();
         //}
 
-        //public IConfiguration _appConfiguration { get; }
+        public Startup(IConfiguration Configuration)
+        {
+            _appConfiguration = Configuration;
+        }
+
+        public IConfiguration _appConfiguration { get; }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
@@ -61,10 +59,19 @@ namespace myAbpBasic.Web.Startup
                         Email = _appConfiguration["Service:Contact:Email"]
                     }
                 });
+                s.DocInclusionPredicate((docName, description) => true);
 
-                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, _appConfiguration["Service:XmlFile"]);
-                s.IncludeXmlComments(xmlPath);
+                // Define the BearerAuth scheme that's in use
+                //s.AddSecurityDefinition("bearerAuth", new ApiKeyScheme()
+                //{
+                //    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                //    Name = "Authorization",
+                //    In = "header",
+                //    Type = "apiKey"
+                //});
+                //var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                //var xmlPath = Path.Combine(basePath, _appConfiguration["Service:XmlFile"]);
+                //s.IncludeXmlComments(xmlPath);
             });
 
 
@@ -113,7 +120,7 @@ namespace myAbpBasic.Web.Startup
             });
 
             // register this service to consul
-            //app.RegisterConsul(lifetime, new ServiceEntity(_appConfiguration));
+            app.RegisterConsul(lifetime, new ServiceEntity(_appConfiguration));
         }
         
     }

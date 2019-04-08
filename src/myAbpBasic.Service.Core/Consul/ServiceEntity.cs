@@ -10,8 +10,8 @@ namespace myAbpBasic.MicroService.Core.Consul
         {
             IP = configuration["Service:IP"];
             Port = Convert.ToInt32(configuration["Service:Port"]);
-            ServiceName = configuration["Service:ServiceName"];
-            ConsulIP = configuration["Service:ConsulIP"];
+            ServiceName = configuration["Service:Name"];
+            ConsulIP = configuration["Consul:IP"];
             ConsulPort = Convert.ToInt32(configuration["Consul:Port"]);
         }
 
