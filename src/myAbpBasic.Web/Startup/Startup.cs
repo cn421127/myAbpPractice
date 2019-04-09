@@ -11,10 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using myAbpBasic.Configuration;
 using myAbpBasic.EntityFrameworkCore;
+using myAbpBasic.MicroService.Core.Consul;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Linq;
-using myAbpBasic.MicroService.Core.Consul;
 
 namespace myAbpBasic.Web.Startup
 {
@@ -36,7 +36,7 @@ namespace myAbpBasic.Web.Startup
         public IConfiguration _appConfiguration { get; }
         public ILogger Logger { get; set; }
 
-        private static string prefix = "-gateway";
+        private static string postfix = "-gateway";
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
@@ -65,11 +65,11 @@ namespace myAbpBasic.Web.Startup
                         Email = _appConfiguration["Service:Contact:Email"]
                     }
                 });
-                s.SwaggerDoc(_appConfiguration["Service:DocName"] + prefix, new Info
+                s.SwaggerDoc(_appConfiguration["Service:DocName"] + postfix, new Info
                 {
-                    Title = _appConfiguration["Service:Title"] + prefix,
-                    Version = _appConfiguration["Service:Version"] + prefix,
-                    Description = _appConfiguration["Service:Description"] + prefix,
+                    Title = _appConfiguration["Service:Title"] + postfix,
+                    Version = _appConfiguration["Service:Version"] + postfix,
+                    Description = _appConfiguration["Service:Description"] + postfix,
                     Contact = new Contact
                     {
                         Name = _appConfiguration["Service:Contact:Name"],
@@ -78,14 +78,14 @@ namespace myAbpBasic.Web.Startup
                 });
                 s.DocInclusionPredicate((docName, description) =>
                 {
-                    string actualName = docName.RemovePostFix(prefix);
-                    if (docName.Contains(prefix))
+                    string actualName = docName.RemovePostFix(postfix);
+                    if (docName.Contains(postfix))
                     {
                         if (!description.RelativePath.Contains(actualName))
                         {
                             var values = description.RelativePath
                                 .Split('/')
-                                .Select(v => v.Replace("api", "api/" + docName.RemovePostFix((prefix))));
+                                .Select(v => v.Replace("api", "api/" + docName.RemovePostFix((postfix))));
 
                             description.RelativePath = string.Join("/", values);
                         }
@@ -95,9 +95,6 @@ namespace myAbpBasic.Web.Startup
                         var values = description.RelativePath
                             .Split('/').ToList();
                         values.RemoveAll((d => d.Contains(actualName)));
-                        //var q = from v in values
-                        //        where !v.Contains(actualName)
-                        //        select v;
 
                         description.RelativePath = string.Join("/", values);
                     }
@@ -119,25 +116,7 @@ namespace myAbpBasic.Web.Startup
                 //var xmlPath = Path.Combine(basePath, _appConfiguration["Service:XmlFile"]);
                 //s.IncludeXmlComments(xmlPath);
             });
-            //services.AddSwaggerGen(s =>
-            //{
-            //    s.DocInclusionPredicate((docName, description) =>
-            //    {
-            //        if (!description.RelativePath.Contains(docName))
-            //        {
-            //            var values = description.RelativePath
-            //                .Split('/')
-            //                .Select(v => v.Replace("api", "api/" + docName));
-
-            //            description.RelativePath = string.Join("/", values);
-            //        }
-
-
-            //        return true;
-
-            //    });
-            //});
-
+           
 
             //Configure Abp and Dependency Injection
             return services.AddAbp<myAbpBasicWebModule>(options =>
@@ -181,8 +160,8 @@ namespace myAbpBasic.Web.Startup
             {
                 s.SwaggerEndpoint($"/doc/{_appConfiguration["Service:DocName"]}/swagger.json",
                     $"{_appConfiguration["Service:Name"]} {_appConfiguration["Service:Version"]}");
-                //s.SwaggerEndpoint($"/doc/{_appConfiguration["Service:DocName"]}{prefix}/swagger.json",
-                //    $"{_appConfiguration["Service:Name"]} {_appConfiguration["Service:Version"]} {prefix}");
+                //s.SwaggerEndpoint($"/doc/{_appConfiguration["Service:DocName"]}{postfix}/swagger.json",
+                //    $"{_appConfiguration["Service:Name"]} {_appConfiguration["Service:Version"]} {postfix}");
             });
 
             // register this service to consul

@@ -47,8 +47,6 @@ namespace SQ.Proton.Gateway.Sample
                     Version = Configuration["Swagger:Version"]
                 });
 
-                //options.OperationFilter<AuthResponsesOperationFilter>();
-
             });
         }
 
@@ -84,19 +82,4 @@ namespace SQ.Proton.Gateway.Sample
             app.UseOcelot().Wait();
         }
     }
-
-    //public class AuthResponsesOperationFilter : IOperationFilter
-    //{
-    //    public void Apply(Operation operation, OperationFilterContext context)
-    //    {
-    //        operation.Parameters.Add(new NonBodyParameter()
-    //        {
-    //            Name = "X-Forwarded-Prefix",
-    //            In = "header", //query formData ..
-    //            Description = "身份验证票据",
-    //            Required = false,
-    //            Type = "string",
-    //        });
-    //    }
-    //}
 }
