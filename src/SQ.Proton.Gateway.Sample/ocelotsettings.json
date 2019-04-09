@@ -3,7 +3,7 @@
     // API:Service.Order
     // --> swagger part
     {
-      "DownstreamPathTemplate": "/doc/serviceorder/swagger.json",
+      "DownstreamPathTemplate": "/doc/serviceorder-gateway/swagger.json",
       "DownstreamScheme": "http",
       "ServiceName": "Service.Order",
       "LoadBalancer": "RoundRobin",
@@ -37,7 +37,7 @@
     // API:Service.Partner
     // --> swagger part
     {
-      "DownstreamPathTemplate": "/doc/servicepartner/swagger.json",
+      "DownstreamPathTemplate": "/doc/servicepartner-gateway/swagger.json",
       "DownstreamScheme": "http",
       "ServiceName": "Service.Partner",
       "LoadBalancer": "RoundRobin",

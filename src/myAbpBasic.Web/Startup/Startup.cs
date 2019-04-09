@@ -1,17 +1,19 @@
 ﻿using Abp.AspNetCore;
 using Abp.Castle.Logging.Log4Net;
 using Abp.EntityFrameworkCore;
+using Abp.Extensions;
+using Castle.Core.Logging;
 using Castle.Facilities.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using myAbpBasic.Configuration;
 using myAbpBasic.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Linq;
 using myAbpBasic.MicroService.Core.Consul;
 
 namespace myAbpBasic.Web.Startup
@@ -28,9 +30,13 @@ namespace myAbpBasic.Web.Startup
         public Startup(IConfiguration Configuration)
         {
             _appConfiguration = Configuration;
+            Logger = NullLogger.Instance;
         }
 
         public IConfiguration _appConfiguration { get; }
+        public ILogger Logger { get; set; }
+
+        private static string prefix = "-gateway";
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
@@ -59,7 +65,47 @@ namespace myAbpBasic.Web.Startup
                         Email = _appConfiguration["Service:Contact:Email"]
                     }
                 });
-                s.DocInclusionPredicate((docName, description) => true);
+                s.SwaggerDoc(_appConfiguration["Service:DocName"] + prefix, new Info
+                {
+                    Title = _appConfiguration["Service:Title"] + prefix,
+                    Version = _appConfiguration["Service:Version"] + prefix,
+                    Description = _appConfiguration["Service:Description"] + prefix,
+                    Contact = new Contact
+                    {
+                        Name = _appConfiguration["Service:Contact:Name"],
+                        Email = _appConfiguration["Service:Contact:Email"]
+                    }
+                });
+                s.DocInclusionPredicate((docName, description) =>
+                {
+                    string actualName = docName.RemovePostFix(prefix);
+                    if (docName.Contains(prefix))
+                    {
+                        if (!description.RelativePath.Contains(actualName))
+                        {
+                            var values = description.RelativePath
+                                .Split('/')
+                                .Select(v => v.Replace("api", "api/" + docName.RemovePostFix((prefix))));
+
+                            description.RelativePath = string.Join("/", values);
+                        }
+                    }
+                    else
+                    {
+                        var values = description.RelativePath
+                            .Split('/').ToList();
+                        values.RemoveAll((d => d.Contains(actualName)));
+                        //var q = from v in values
+                        //        where !v.Contains(actualName)
+                        //        select v;
+
+                        description.RelativePath = string.Join("/", values);
+                    }
+
+
+                    return true;
+
+                });
 
                 // Define the BearerAuth scheme that's in use
                 //s.AddSecurityDefinition("bearerAuth", new ApiKeyScheme()
@@ -73,6 +119,24 @@ namespace myAbpBasic.Web.Startup
                 //var xmlPath = Path.Combine(basePath, _appConfiguration["Service:XmlFile"]);
                 //s.IncludeXmlComments(xmlPath);
             });
+            //services.AddSwaggerGen(s =>
+            //{
+            //    s.DocInclusionPredicate((docName, description) =>
+            //    {
+            //        if (!description.RelativePath.Contains(docName))
+            //        {
+            //            var values = description.RelativePath
+            //                .Split('/')
+            //                .Select(v => v.Replace("api", "api/" + docName));
+
+            //            description.RelativePath = string.Join("/", values);
+            //        }
+
+
+            //        return true;
+
+            //    });
+            //});
 
 
             //Configure Abp and Dependency Injection
@@ -117,12 +181,14 @@ namespace myAbpBasic.Web.Startup
             {
                 s.SwaggerEndpoint($"/doc/{_appConfiguration["Service:DocName"]}/swagger.json",
                     $"{_appConfiguration["Service:Name"]} {_appConfiguration["Service:Version"]}");
+                //s.SwaggerEndpoint($"/doc/{_appConfiguration["Service:DocName"]}{prefix}/swagger.json",
+                //    $"{_appConfiguration["Service:Name"]} {_appConfiguration["Service:Version"]} {prefix}");
             });
 
             // register this service to consul
             app.RegisterConsul(lifetime, new ServiceEntity(_appConfiguration));
         }
-        
+
     }
 
     public static class HostingEnvironmentExtensions
