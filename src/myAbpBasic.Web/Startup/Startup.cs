@@ -51,6 +51,22 @@ namespace myAbpBasic.Web.Startup
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
 
+
+            // identity server
+            services.AddMvcCore().AddAuthorization().AddJsonFormatters();
+            services.AddAuthentication(_appConfiguration["IdentityService:DefaultScheme"]).AddIdentityServerAuthentication(_appConfiguration["IdentityService:DefaultScheme"], options =>
+            {
+                options.Authority = _appConfiguration["IdentityService:Uri"];
+                options.RequireHttpsMetadata = false;
+                options.ApiName = "serviceorder"; // match with configuration in IdentityServer
+            });
+            //services.AddAuthentication(_appConfiguration["IdentityService:DefaultScheme"])
+            //    .AddIdentityServerAuthentication(options =>
+            //    {
+            //        options.Authority = _appConfiguration["IdentityService:Uri"];
+            //        options.RequireHttpsMetadata = Convert.ToBoolean(_appConfiguration["IdentityService:UseHttps"]);
+            //    });
+
             // Swagger
             services.AddSwaggerGen(s =>
             {
@@ -116,7 +132,7 @@ namespace myAbpBasic.Web.Startup
                 //var xmlPath = Path.Combine(basePath, _appConfiguration["Service:XmlFile"]);
                 //s.IncludeXmlComments(xmlPath);
             });
-           
+
 
             //Configure Abp and Dependency Injection
             return services.AddAbp<myAbpBasicWebModule>(options =>
@@ -126,6 +142,8 @@ namespace myAbpBasic.Web.Startup
                     f => f.UseAbpLog4Net().WithConfig("log4net.config")
                 );
             });
+
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime lifetime)
@@ -144,6 +162,7 @@ namespace myAbpBasic.Web.Startup
 
             app.UseStaticFiles();
 
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

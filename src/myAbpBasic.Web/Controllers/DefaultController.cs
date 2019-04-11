@@ -3,6 +3,7 @@ using Abp.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace myAbpBasic.Web.Controllers
 {
@@ -25,6 +26,7 @@ namespace myAbpBasic.Web.Controllers
 
         // GET: api/Default
         [HttpGet]
+        [Authorize]
         public IEnumerable<string> Get()
         {
             return new string[] {  $"{serviceName}: {DateTime.Now.ToString()} {Environment.MachineName} " +

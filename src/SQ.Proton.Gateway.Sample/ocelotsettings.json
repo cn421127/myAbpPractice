@@ -32,6 +32,10 @@
         "Period": "10s", // 统计时间段：1s, 5m, 1h, 1d
         "PeriodTimespan": 5, // 多少秒之后客户端可以重试
         "Limit": 5 // 在统计时间段内允许的最大请求数量
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OrderServiceKey",
+        "AllowedScopes": []
       }
     },
     // API:Service.Partner
@@ -60,9 +64,41 @@
         "ExceptionsAllowedBeforeBreaking": 2, // 允许多少个异常请求
         "DurationOfBreak": 5000, // 熔断的时间，单位为毫秒
         "TimeoutValue": 3000 // 如果下游请求的处理时间超过多少则视如该请求超时
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "PartnerServiceKey",
+        "AllowedScopes": []
+      }
+    },
+
+    // API:Service.Authorize
+    // --> swagger part
+    {
+      "DownstreamPathTemplate": "/doc/serviceauthorize-gateway/swagger.json",
+      "DownstreamScheme": "http",
+      "ServiceName": "Service.Authorize",
+      "LoadBalancer": "RoundRobin",
+      "UseServiceDiscovery": true,
+      "UpstreamPathTemplate": "/doc/serviceauthorize/swagger.json",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
+    },
+    {
+      "UseServiceDiscovery": true, // use Consul service discovery
+      "DownstreamPathTemplate": "/{url}",
+      "DownstreamScheme": "http",
+      "ServiceName": "Service.Authorize",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/api/Serviceauthorize/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "ReRoutesCaseSensitive": false, // non case sensitive
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 2, // 允许多少个异常请求
+        "DurationOfBreak": 5000, // 熔断的时间，单位为毫秒
+        "TimeoutValue": 3000 // 如果下游请求的处理时间超过多少则视如该请求超时
       }
     }
-
   ],
   "GlobalConfiguration": {
     //"BaseUrl": "https://api.mybusiness.com"

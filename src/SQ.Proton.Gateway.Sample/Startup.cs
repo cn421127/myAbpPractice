@@ -17,6 +17,7 @@ using Ocelot.Provider.Consul;
 using Ocelot.Provider.Polly;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using IdentityServer4.AccessTokenValidation;
 
 namespace SQ.Proton.Gateway.Sample
 {
@@ -33,7 +34,30 @@ namespace SQ.Proton.Gateway.Sample
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // IdentityServer
+            #region IdentityServerAuthenticationOptions => need to refactor
+            Action<IdentityServerAuthenticationOptions> isaOptClient = option =>
+            {
+                option.Authority = Configuration["IdentityService:Uri"];
+                option.ApiName = "serviceorder";
+                option.RequireHttpsMetadata = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]);
+                option.SupportedTokens = SupportedTokens.Both;
+                option.ApiSecret = Configuration["IdentityService:ApiSecrets:orderservice"];
+            };
 
+            Action<IdentityServerAuthenticationOptions> isaOptProduct = option =>
+            {
+                option.Authority = Configuration["IdentityService:Uri"];
+                option.ApiName = "servicepartner";
+                option.RequireHttpsMetadata = Convert.ToBoolean(Configuration["IdentityService:UseHttps"]);
+                option.SupportedTokens = SupportedTokens.Both;
+                option.ApiSecret = Configuration["IdentityService:ApiSecrets:partnerservice"];
+            };
+            #endregion
+
+            services.AddAuthentication()
+                .AddIdentityServerAuthentication("PartnerServiceKey", isaOptProduct)
+                .AddIdentityServerAuthentication("OrderServiceKey", isaOptClient);
 
             services.AddOcelot(Configuration).AddConsul().AddPolly();
 
@@ -56,6 +80,7 @@ namespace SQ.Proton.Gateway.Sample
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
             }
             else
             {
